@@ -43,7 +43,7 @@ At the end of this part, you will have a working script that sends a question to
 **Prompt 1.1 — Project scaffold**
 
 ```
-I am starting a Python project called "personal-kb". Please:
+I am starting a Python project called "personal-knowledge-base". Please:
 1. Give me the terminal commands to create a project folder, set up a Python virtual environment, and activate it.
 2. Create a requirements.txt with these packages: google-generativeai, python-dotenv
 3. Create a .env file template with a placeholder GOOGLE_API_KEY variable
@@ -52,7 +52,7 @@ I am starting a Python project called "personal-kb". Please:
 Explain what each step does in plain language.
 ```
 
-> **What to expect:** A set of shell commands and three files. After running them, your folder should look like: `personal-kb/ ├── .env ├── .gitignore ├── requirements.txt └── venv/`
+> **What to expect:** A set of shell commands and three files. After running them, your folder should look like: `personal-knowledge-base/ ├── .env ├── .gitignore ├── requirements.txt └── venv/`
 >
 > **How to test:** Run `pip list` inside the activated venv. You should see `google-generativeai` and `python-dotenv` listed.
 
@@ -61,7 +61,7 @@ Explain what each step does in plain language.
 **Prompt 1.2 — First LLM call**
 
 ```
-Inside my "personal-kb" project, create a file called hello_llm.py.
+Inside my "personal-knowledge-base" project, create a file called hello_llm.py.
 It should:
 1. Load the GOOGLE_API_KEY from the .env file using python-dotenv
 2. Create a Google Generative AI client using the google-generativeai library
@@ -115,7 +115,7 @@ This part also covers loading different file types: plain text, PDFs, and CSV fi
 **Prompt 2.1 — Loading and reading a text file**
 
 ```
-Create a file called document_loader.py in my personal-kb project.
+Create a file called document_loader.py in my personal-knowledge-base project.
 Write a function called load_text_file(filepath) that:
 1. Reads a .txt file
 2. Prints the total character count and word count
