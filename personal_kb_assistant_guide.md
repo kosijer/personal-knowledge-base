@@ -30,7 +30,7 @@ You do **not** need to know LangChain, embeddings, or vector databases yet. That
 
 Before writing any "AI code", you need a clean workspace. In Python this means a **virtual environment** — a private box where you install only the packages your project needs, isolated from everything else on your system.
 
-After setting that up, you will make your first call to a language model. No frameworks, no libraries except the official SDK. Just you, a Python script, and the model. This is important: seeing the raw API response before adding abstractions helps you understand what every framework is actually doing under the hood.
+After setting that up, you will make your first call to a language model. No frameworks, no libraries except the official **google-genai** SDK (the supported Python client for the Gemini API). Just you, a Python script, and the model. This is important: seeing the raw API response before adding abstractions helps you understand what every framework is actually doing under the hood.
 
 At the end of this part, you will have a working script that sends a question to a real LLM and prints the answer.
 
@@ -45,7 +45,7 @@ At the end of this part, you will have a working script that sends a question to
 ```
 I am starting a Python project called "personal-knowledge-base". Please:
 1. Give me the terminal commands to create a project folder, set up a Python virtual environment, and activate it.
-2. Create a requirements.txt with these packages: google-generativeai, python-dotenv
+2. Create a requirements.txt with these packages: google-genai, python-dotenv
 3. Create a .env file template with a placeholder GOOGLE_API_KEY variable
 4. Create a .gitignore that excludes .env, __pycache__, and the venv folder
 
@@ -54,7 +54,7 @@ Explain what each step does in plain language.
 
 > **What to expect:** A set of shell commands and three files. After running them, your folder should look like: `personal-knowledge-base/ ├── .env ├── .gitignore ├── requirements.txt └── venv/`
 >
-> **How to test:** Run `pip list` inside the activated venv. You should see `google-generativeai` and `python-dotenv` listed.
+> **How to test:** Run `pip list` inside the activated venv. You should see `google-genai` and `python-dotenv` listed.
 
 ---
 
@@ -64,8 +64,8 @@ Explain what each step does in plain language.
 Inside my "personal-knowledge-base" project, create a file called hello_llm.py.
 It should:
 1. Load the GOOGLE_API_KEY from the .env file using python-dotenv
-2. Create a Google Generative AI client using the google-generativeai library
-3. Send the message "What is a knowledge base?" to the gemini-1.5-flash model
+2. Create a Google Generative AI client using the google-genai library
+3. Send the message "What is a knowledge base?" to the gemini-2.5-flash model
 4. Print the response text to the terminal
 
 Add a comment above each block of code explaining what it does.
@@ -75,7 +75,7 @@ Add a comment above each block of code explaining what it does.
 >
 > **How to test:** Change the question in the script to something else and run it again. If it answers, the API connection is working perfectly.
 >
-> **Note on the free tier:** `gemini-1.5-flash` is free with a limit of 15 requests per minute and 1,500 requests per day — more than enough for this entire project.
+> **Note on the free tier:** `gemini-2.5-flash` is available on the free tier with generous rate limits — more than enough for this entire project.
 
 ---
 
@@ -89,7 +89,7 @@ Modify hello_llm.py to also print:
 - The number of response tokens consumed
 - The finish reason
 
-Use the google-generativeai SDK. Then explain what "tokens" are and why they matter for costs.
+Use the google-genai SDK. Then explain what "tokens" are and why they matter for costs.
 ```
 
 > **What to expect:** The same script, now printing extra metadata after the answer. This is not strictly necessary for the project, but it teaches you how the API response is structured — knowledge you will use constantly.
@@ -204,7 +204,7 @@ This approach is called **RAG — Retrieval-Augmented Generation**. The model's 
 
 ```
 Create a new file called embeddings_demo.py.
-Using the google-generativeai library, call the embedding API with the model "models/text-embedding-004"
+Using the google-genai library, call the embedding API with the model "models/text-embedding-004"
 to get the embedding vector for the sentence "The moon orbits the Earth."
 Print:
 - The first 5 numbers of the vector
@@ -245,7 +245,7 @@ I want to use ChromaDB as my local vector database, with Google's embedding mode
 3. In it, write a function called create_collection(name) that creates a persistent ChromaDB collection stored in a local folder called "chroma_db"
 4. Write a function called add_chunks(collection, chunks, source_name) that:
    - Takes a list of text strings
-   - Generates embeddings for each chunk using Google's "models/text-embedding-004" model via google-generativeai
+   - Generates embeddings for each chunk using Google's "models/text-embedding-004" model via google-genai
    - Adds them to the collection with those embeddings
    - Tags each chunk with the source_name as metadata
 5. Write a simple test that creates a collection called "test", adds 3 sentences, and prints the count of stored items.
@@ -349,7 +349,7 @@ Explain why we separate build_index and load_index — what is the practical ben
 ```
 In rag_pipeline.py, write a function called create_qa_chain(vector_store) that:
 1. Creates a retriever from the vector store that returns the top 4 most relevant chunks
-2. Builds a RetrievalQA chain using ChatGoogleGenerativeAI with model "gemini-1.5-flash"
+2. Builds a RetrievalQA chain using ChatGoogleGenerativeAI with model "gemini-2.5-flash"
 3. Uses this prompt template:
    "Use the following context to answer the question. If the answer is not in the context, say 'I don't know based on the provided documents.'
    Context: {context}

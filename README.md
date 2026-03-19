@@ -28,7 +28,7 @@ No cloud storage. Everything lives on your machine.
 
 ## Stack
 
-- **LLM & Embeddings** — Google Gemini (`gemini-1.5-flash` + `text-embedding-004`)
+- **LLM & Embeddings** — Google Gemini via `google-genai` (`gemini-2.5-flash` + `text-embedding-004`)
 - **Vector store** — ChromaDB (local, persistent)
 - **Pipeline** — LangChain
 - **Interface** — CLI + Streamlit
@@ -37,13 +37,13 @@ No cloud storage. Everything lives on your machine.
 
 ```bash
 git clone <repo-url>
-cd personal-kb
+cd personal-knowledge-base
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Copy `.env.example` to `.env` and add your Gemini API key:
+Create a `.env` file in the project root and add your Gemini API key:
 
 ```
 GOOGLE_API_KEY=your_key_here
@@ -70,7 +70,7 @@ streamlit run app.py
 ## Project structure
 
 ```
-personal-kb/
+personal-knowledge-base/
 ├── documents/          # Drop your files here
 ├── chroma_db/          # Vector database (auto-created)
 ├── document_loader.py  # File parsers (txt, pdf, csv)
