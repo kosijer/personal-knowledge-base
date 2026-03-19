@@ -111,6 +111,36 @@ def dummy_pdf_roundtrip_demo() -> None:
             print("First 200 characters:\n", extracted_text[:200])
 
 
+def load_csv(filepath: str) -> list[str]:
+    """
+    Load a CSV file and convert each row into a readable sentence.
+
+    Example output:
+      "Row 5: name=Alice, department=Engineering, salary=120000"
+    """
+    import csv
+
+    with open(filepath, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+
+        rows_as_sentences: list[str] = []
+        for row_index, row in enumerate(reader, start=1):
+            # Skip fully-empty rows (e.g. trailing blank lines)
+            if not row or all(v is None or str(v).strip() == "" for v in row.values()):
+                continue
+
+            # Preserve the order of columns as defined by the CSV header
+            parts: list[str] = []
+            for key in reader.fieldnames or []:
+                val = row.get(key, "")
+                val_str = "" if val is None else str(val).strip()
+                parts.append(f"{key}={val_str}")
+
+            rows_as_sentences.append(f"Row {row_index}: " + ", ".join(parts))
+
+    return rows_as_sentences
+
+
 if __name__ == "__main__":
     # Basic self-test: load sample.txt, chunk it, then print chunk stats.
     text = load_text_file("sample.txt")
@@ -127,4 +157,13 @@ if __name__ == "__main__":
 
     # PDF self-test: create a dummy PDF and load it back.
     dummy_pdf_roundtrip_demo()
+
+    # CSV self-test: load employees.csv and print row-sentences.
+    csv_rows = load_csv("employees.csv")
+    print(f"\nLoaded {len(csv_rows)} CSV rows.")
+    if csv_rows:
+        print("\n--- First row sentence ---")
+        print(csv_rows[0])
+        print("\n--- Last row sentence ---")
+        print(csv_rows[-1])
 
