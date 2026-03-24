@@ -12,3 +12,6 @@ __pycache__/
 venv/
 .venv/
 env/
+
+# Local vector database (ChromaDB)
+chroma_db/

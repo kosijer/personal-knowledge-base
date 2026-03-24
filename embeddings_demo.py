@@ -57,12 +57,13 @@ def embed_sentences(sentences: list[str]) -> tuple[str, list[list[float]]]:
     global _resolved_embedding_model
 
     if _resolved_embedding_model:
+        model = _resolved_embedding_model
         response = client.models.embed_content(
-            model=_resolved_embedding_model,
+            model=model,
             contents=sentences,
         )
         vectors = [emb.values for emb in response.embeddings]
-        return _resolved_embedding_model, vectors
+        return model, vectors
 
     for model in (PRIMARY_EMBEDDING_MODEL, FALLBACK_EMBEDDING_MODEL):
         try:

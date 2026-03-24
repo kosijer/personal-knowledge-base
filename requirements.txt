@@ -2,3 +2,4 @@ google-genai
 python-dotenv
 pypdf
 fpdf2
+chromadb
